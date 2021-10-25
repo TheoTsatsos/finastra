@@ -207,3 +207,14 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     depends_on = [azurerm_virtual_network.test, azurerm_application_gateway.network]
     tags       = var.tags
 }
+
+resource "null_resource" "server_configuration" {
+  provisioner "local-exec" {
+    command     = "/bin/bash healthcheck.sh"
+  }
+
+  depends_on = [
+    azurerm_kubernetes_cluster.k8s
+  ]
+}
+
