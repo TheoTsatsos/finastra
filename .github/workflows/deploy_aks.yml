@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: /home/runner/work/finastra/finastra
+        working-directory: ${{ GITHUB_ACTION_PATH }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -26,14 +26,14 @@ jobs:
         # terraform_version: 0.13.0
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     - name: working directory
-      run: cd /home/runner/work/finastra/finastra
+      run: cd ${{ GITHUB_ACTION_PATH }}
     - name: Terraform Format
       id: fmt
       run: terraform fmt -check
     - name: Terraform Init
       id: init
       run: terraform init
-      working-directory: ./
+      working-directory: ${{ GITHUB_ACTION_PATH }}
     - name: Terraform Validate
       id: validate
       run: terraform validate -no-color
